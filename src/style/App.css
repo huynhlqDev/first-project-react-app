@@ -24,6 +24,11 @@
   color: white;
 }
 
+nav a {
+  color: blue;
+  margin: 0 10px;
+}
+
 .App-link {
   color: #61dafb;
 }
