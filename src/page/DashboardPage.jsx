@@ -1,7 +1,6 @@
 import React from 'react';
-import './Dashboard.css'; // Assuming you will create a specific CSS file for the dashboard
 
-const Dashboard = () => {
+const DashboardPage = () => {
     return (
         <div className="dashboard">
             <h1>Welcome to the Dashboard</h1>
@@ -21,4 +20,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default DashboardPage;
