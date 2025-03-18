@@ -1,14 +1,26 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { login } from '../redux/action/authActions';
 
 const LoginPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { error } = useSelector((state) => state.auth);
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
         // Handle login logic here
         console.log('Username:', username);
         console.log('Password:', password);
+        dispatch(login(username, password));
+        if (!error) {
+            navigate("/dashboard"); // Chuyển hướng sau khi login thành công
+        }
     };
 
     return (
