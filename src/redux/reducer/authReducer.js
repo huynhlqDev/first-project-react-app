@@ -1,18 +1,20 @@
 import { LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from "../action/authActions";
 
 const initialState = {
-  token: localStorage.getItem("token") || null,
-  error: "error mesage",
+  logged: false,
+  error: null
 };
 
 const authReducer = (state = initialState, action) => {
+  console.log(`[authReducer] - ${action.type}, `,action.payload);
+
   switch (action.type) {
     case LOGIN_SUCCESS:
-      return { ...state, token: action.payload, error: null };
+      return { ...state, logged: true, error: null };
     case LOGIN_FAIL:
-      return { ...state, token: null, error: action.payload };
+      return { ...state, logged: false, error: action.payload };
     case LOGOUT:
-      return { ...state, token: null, error: null };
+      return { ...state, logged: false, error: null };
     default:
       return state;
   }
