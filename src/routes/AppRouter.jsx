@@ -7,8 +7,12 @@ import RegisterPage from '../page/RegisterPage';
 import NotFoundPage from '../page/NotFoundPage';
 import TaskFormPage from '../page/TaskFormPage';
 import ProjectFormPage from '../page/ProjectFormPage';
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
 const AppRouter = () => {
+
+    const {logged} = useSelector((state) => state.auth);
 
     return (
         <BrowserRouter>
@@ -18,7 +22,7 @@ const AppRouter = () => {
                     {/* index page for "/" */}
                     <Route index element={<WelcomePage></WelcomePage>} />
 
-                    <Route path="/login" element={<LoginPage></LoginPage>} />
+                    <Route path="/login" element={logged ? <Navigate to="/dashboard" /> : <LoginPage></LoginPage>} />
                     <Route path="/register" element={<RegisterPage></RegisterPage>} />
                     <Route path="/dashboard" element={<DashboardPage></DashboardPage>} />
                     <Route path="/project" element={<ProjectFormPage></ProjectFormPage>} />
