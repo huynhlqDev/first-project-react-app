@@ -20,7 +20,7 @@ const LoginPage = () => {
 
     /// PAGE LIFE CYCLE
     useEffect(() => {
-        console.log("validate: ", validate);
+        // console.log("validate: ", validate);
     }, [validate])
 
     useEffect(() => {
@@ -35,13 +35,20 @@ const LoginPage = () => {
     }, [error])
 
     useEffect(() => {
-        console.log("username: ", username);
-        console.log("password: ", password);
+        // console.log("username: ", username);
+        // console.log("password: ", password);
     }, [username, password])
 
     useEffect(() => {
         if (logged) navigate("/dashboard");
     }, [logged])
+
+    useEffect(() => {
+        console.log("[APPEAR] Login");
+        return () => {
+            console.log("[LEAVE] Login");
+        }
+    }, [])
 
     /// LOGIC FUNCTIONS
     const handleSubmit = (e) => {
@@ -63,11 +70,11 @@ const LoginPage = () => {
     }
 
     const validateUsername = () => {
-        return username.length == 0;
+        return username.length === 0;
     }
 
     const validatePassword = () => {
-        return password.length == 0;
+        return password.length === 0;
     }
 
     /// RENDER
@@ -86,9 +93,8 @@ const LoginPage = () => {
                     required
                     error={(validate.username)}
                     onInput={(e) => setUsername(e.target.value)}
-                    helperText= {validate.username ? "Incorrect entry." : ""}
+                    helperText={validate.username ? "Incorrect entry." : ""}
                 />
-                <br></br>
                 <TextField
                     id="password"
                     label="Password"
@@ -97,7 +103,7 @@ const LoginPage = () => {
                     required
                     error={(validate.password)}
                     onInput={(e) => setPassword(e.target.value)}
-                    helperText= {(validate.password) ? "Incorrect entry." : ""}
+                    helperText={(validate.password) ? "Incorrect entry." : ""}
                 />
                 <br></br>
                 <Button

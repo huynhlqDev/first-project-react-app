@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8080/api";
+import { API_URL } from "../util/environment";
 
 // Example API response:
 // 1. OK

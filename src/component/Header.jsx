@@ -1,13 +1,19 @@
-import { Link } from "react-router-dom";
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { AppBar, Toolbar, Typography, Button, IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import {logout } from "../redux/action/authActions";
 
 
 
 const Header = () => {
+    const dispatch = useDispatch();
+    const { logged } = useSelector((state) => state.auth);
+    const token = localStorage.getItem("TOKEN") || null;
 
-    const { logged, error } = useSelector((state) => state.auth);
+    const handleLogout = (e) => {
+        dispatch(logout());
+    }
+
     return (
         <AppBar position="static" sx={{ backgroundColor: logged ? "#F2F2F7" : "transparent" , boxShadow: "none" }}>
             <Toolbar>
@@ -17,15 +23,15 @@ const Header = () => {
                 </IconButton>
 
                 {/* Khi đăng nhập mới hiển thị tiêu đề */}
-                {logged && (
+                {logged && token && (
                     <Typography variant="h6" sx={{ flexGrow: 1, marginLeft: 2 }}>
                         Dashboard
                     </Typography>
                 )}
 
                 {/* Khi đăng nhập mới hiển thị nút Logout */}
-                {logged && (
-                    <Button color="inherit" onClick={() => { }}>
+                {logged && token && (
+                    <Button color="inherit" onClick={handleLogout}>
                         Logout
                     </Button>
                 )}

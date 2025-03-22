@@ -7,27 +7,40 @@ import RegisterPage from '../page/RegisterPage';
 import NotFoundPage from '../page/NotFoundPage';
 import TaskFormPage from '../page/TaskFormPage';
 import ProjectFormPage from '../page/ProjectFormPage';
-import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import AuthGuard from './AuthGuard';
 
 const AppRouter = () => {
-
-    const {logged} = useSelector((state) => state.auth);
-
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Layout></Layout>}>
-                    <Route index element={<WelcomePage />} />
-                    {/* index page for "/" */}
                     <Route index element={<WelcomePage></WelcomePage>} />
-
-                    <Route path="/login" element={logged ? <Navigate to="/dashboard" /> : <LoginPage></LoginPage>} />
-                    <Route path="/register" element={<RegisterPage></RegisterPage>} />
-                    <Route path="/dashboard" element={<DashboardPage></DashboardPage>} />
-                    <Route path="/project" element={<ProjectFormPage></ProjectFormPage>} />
-                    <Route path="/task" element={<TaskFormPage></TaskFormPage>} />
-
+                    {/* LOGGIN */}
+                    <Route
+                        path="/login"
+                        element={<AuthGuard requireAuth={false}><LoginPage /></AuthGuard>}
+                    />
+                    {/* REGISTER */}
+                    <Route
+                        path="/register"
+                        element={<RegisterPage />}
+                    />
+                    {/* DASHBOARD */}
+                    <Route
+                        path="/dashboard"
+                        element={<AuthGuard requireAuth={true}><DashboardPage /></AuthGuard>}
+                    />
+                    {/* PROJECT */}
+                    <Route
+                        path="/project"
+                        element={<AuthGuard requireAuth={true}><ProjectFormPage /></AuthGuard>}
+                    />
+                    {/* TASK */}
+                    <Route
+                        path="/task"
+                        element={<AuthGuard requireAuth={true}><TaskFormPage /></AuthGuard>}
+                    />
+                    {/* NOT FOUND */}
                     <Route path="*" element={<NotFoundPage />} />
                 </Route>
             </Routes>

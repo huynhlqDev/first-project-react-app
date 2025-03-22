@@ -6,7 +6,7 @@ const initialState = {
 };
 
 const authReducer = (state = initialState, action) => {
-  console.log(`[authReducer] - ${action.type}, `,action.payload);
+  console.log(`[REDUCER] - ${action.type}, `,action.payload);
 
   switch (action.type) {
     case LOGIN_SUCCESS:
