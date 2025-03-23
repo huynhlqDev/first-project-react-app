@@ -1,8 +1,11 @@
-import { loginApi } from "../../service/authAPIService";
+import { loginApi, registerApi } from "../../service/authAPIService";
 
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAIL = "LOGIN_FAIL";
 export const LOGOUT = "LOGOUT";
+
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+export const REGISTER_FAIL = "REGISTER_FAIL";
 
 export const login = (username, password) => async (dispatch) => {
   console.log(`[ACTION] - login: ${username}`);
@@ -25,3 +28,16 @@ export const logout = () => {
   localStorage.clear();
   return { type: LOGOUT };
 };
+
+export const register = (fullName, username, password) => async (dispatch) => {
+  try {
+    const data = await registerApi(fullName, username, password);
+    console.log(`[ACTION] - data: ${data}`);
+    // localStorage.setItem("TOKEN", data.result.token);
+    dispatch({ type: REGISTER_SUCCESS, payload: true });
+  }
+  catch (error) {
+    console.log(`[ACTION] - error: ${error}`);
+    dispatch({ type: REGISTER_FAIL, payload: error.message });
+  }
+}
