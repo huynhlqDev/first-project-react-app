@@ -44,7 +44,6 @@ const LoginPage = () => {
     }, [logged])
 
     useEffect(() => {
-        console.log("[APPEAR] Login");
         return () => {
             console.log("[LEAVE] Login");
         }

@@ -1,9 +1,8 @@
-import React from 'react';
 
 const RegisterPage = () => {
     return (
         <div className="register-page">
-            <h1>Register</h1>
+            <h1>Sign Up</h1>
         </div>
     )
 }

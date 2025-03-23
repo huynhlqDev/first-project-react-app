@@ -3,11 +3,9 @@ import { useEffect } from 'react';
 import { fetchProjects } from '../redux/action/projectActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/action/authActions';
-import { useNavigate } from 'react-router-dom';
 
 const DashboardPage = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { projects, error } = useSelector((state) => state.project);
 
     useEffect(() => {
@@ -17,8 +15,7 @@ const DashboardPage = () => {
             alert(error);
             dispatch(logout());
         }
-    }, [projects, error]);
-
+    }, [projects, error, dispatch]);
 
     useEffect(() => {
         dispatch(fetchProjects());
