@@ -38,7 +38,7 @@ const DashboardPage = () => {
             </section>
             <nav>
                 <a href="/task-form">Create New Task</a>
-                <a href="/project-form">Create New Project</a>
+                <a href="/project">Create New Project</a>
             </nav>
         </div>
     );

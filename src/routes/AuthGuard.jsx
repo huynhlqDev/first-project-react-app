@@ -9,17 +9,17 @@ const AuthGuard = ({ children, requireAuth }) => {
   const token = localStorage.getItem("TOKEN") || null;
   const logged = useSelector((state) => state.auth.logged)
 
-  useEffect(() => {
-    if (!logged) {
-      navigate("/login", { replace: true });
-    }
-  }, [logged]);
+  // useEffect(() => {
+  //   if (!logged) {
+  //     navigate("/login", { replace: true });
+  //   }
+  // }, [logged]);
   
   // Nếu yêu cầu đăng nhập nhưng chưa có token -> Chuyển về Login
-  if (requireAuth && !token && !logged) return <Navigate to="/login" replace />;
+  // if (requireAuth && !token && !logged) return <Navigate to="/login" replace />;
 
-  // Nếu không yêu cầu đăng nhập nhưng đã có token -> Chuyển về Dashboard
-  if (!requireAuth && token) return <Navigate to="/dashboard" replace />;
+  // // Nếu không yêu cầu đăng nhập nhưng đã có token -> Chuyển về Dashboard
+  // if (!requireAuth && token) return <Navigate to="/dashboard" replace />;
 
   return children;
 };
