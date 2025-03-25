@@ -1,12 +1,10 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { AppBar, Toolbar, Typography, Button, IconButton } from "@mui/material";
+import { AppBar, Toolbar, Typography, Button, IconButton, Avatar } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { logout } from "../redux/action/authActions";
 import { useNavigate } from "react-router-dom";
 import ButtonGroup from '@mui/material/ButtonGroup';
 import { useLocation } from "react-router-dom";
-
-
 
 const Header = () => {
     const location = useLocation();
@@ -59,20 +57,21 @@ const Header = () => {
                 <Typography variant="h6" sx={{ flexGrow: 1, marginLeft: 2 }}>
                     {getTitles()}
                 </Typography>
-
                 <ButtonGroup variant="text" aria-label="Basic button group">
-                    {/* Khi đăng nhập mới hiển thị nút Logout */}
-                    {logged && token && (
+                    {(logged || token) && (
+                        <Avatar>H</Avatar>
+                    )}
+                    {(logged || token) && (
                         <Button color="inherit" onClick={handleLogout}>
                             Logout
                         </Button>
                     )}
-                    {!logged && !token && (
+                    {!token && (
                         <Button color="inherit" onClick={handleSignIn}>
                             Sign in
                         </Button>
                     )}
-                    {!logged && !token && (
+                    {!token && (
                         <Button color="inherit" onClick={handleSignUp}>
                             Sign up
                         </Button>

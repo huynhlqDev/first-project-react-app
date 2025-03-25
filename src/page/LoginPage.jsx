@@ -24,10 +24,6 @@ const LoginPage = () => {
     }, [validate])
 
     useEffect(() => {
-        if (logged) navigate("/dashboard");
-    }, [logged])
-
-    useEffect(() => {
         if (error) {
             alert(error);
             dispatch(logout());

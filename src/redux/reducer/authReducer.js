@@ -1,6 +1,7 @@
 import { LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT, REGISTER_SUCCESS, REGISTER_FAIL } from "../action/authActions";
 
 const initialState = {
+  username: null,
   registered: false,
   logged: false,
   error: null
@@ -11,7 +12,7 @@ const authReducer = (state = initialState, action) => {
 
   switch (action.type) {
     case LOGIN_SUCCESS:
-      return { ...state, logged: true, error: null };
+      return { ...state, logged: true, error: null , username: action.payload};
     case LOGIN_FAIL:
       return { ...state, logged: false, error: action.payload };
     case LOGOUT:

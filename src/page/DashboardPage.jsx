@@ -15,11 +15,11 @@ const DashboardPage = () => {
             alert(error);
             dispatch(logout());
         }
-    }, [projects, error, dispatch]);
+    }, [projects, error]);
 
     useEffect(() => {
-        dispatch(fetchProjects());
         console.log("[APPEAR] Dashboard");
+        dispatch(fetchProjects());
         return () => {
             console.log("[LEAVE] Dashboard");
         }

@@ -3,7 +3,6 @@ import { loginApi, registerApi } from "../../service/authAPIService";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAIL = "LOGIN_FAIL";
 export const LOGOUT = "LOGOUT";
-
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";
 
@@ -14,10 +13,11 @@ export const login = (username, password) => async (dispatch) => {
     const data = await loginApi(username, password);
     // 1. save token
     localStorage.setItem("TOKEN", data.result.token);
+    localStorage.setItem("USERNAME", data.result.user.username);
 
     // 2. save user
 
-    dispatch({ type: LOGIN_SUCCESS, payload: data.code });
+    dispatch({ type: LOGIN_SUCCESS, payload: data.result.user.username });
   } catch (error) {
     dispatch({ type: LOGIN_FAIL, payload: error.message });
   }

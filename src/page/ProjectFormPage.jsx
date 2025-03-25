@@ -4,15 +4,10 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { useDispatch } from 'react-redux';
-import { register } from '../redux/action/authActions';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { logout } from '../redux/action/authActions';
-import { useNavigate } from 'react-router-dom';
+import { addProject } from '../redux/action/projectActions';
 
 const ProjectFormPage = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const [projectname, setProjectname] = useState('');
     const [projectId, setProjectId] = useState('');
@@ -30,7 +25,12 @@ const ProjectFormPage = () => {
     const handleSubmit = (e) => {
         if (!isValidInput()) {
             e.preventDefault();
-            // dispatch(register(projectname, projectId, projectDescription, startDate, endDate));
+            dispatch(addProject(
+                projectId,
+                projectname,
+                projectDescription,
+                startDate,
+                endDate))
         }
     }
 
