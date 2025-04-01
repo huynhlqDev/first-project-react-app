@@ -8,40 +8,41 @@ import NotFoundPage from '../page/NotFoundPage';
 import TaskFormPage from '../page/TaskFormPage';
 import ProjectFormPage from '../page/ProjectFormPage';
 import AuthGuard from './AuthGuard';
+import { ROUTE } from '../util/environment'
 
 const AppRouter = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Layout></Layout>}>
+                <Route path={ROUTE.WELCOME} element={<Layout></Layout>}>
                     <Route index element={<WelcomePage></WelcomePage>} />
                     {/* LOGGIN */}
                     <Route
-                        path="/login"
+                        path={ROUTE.LOGIN}
                         element={<AuthGuard requireAuth={false}><LoginPage /></AuthGuard>}
                     />
                     {/* REGISTER */}
                     <Route
-                        path="/register"
+                        path={ROUTE.REGISTER}
                         element={<RegisterPage />}
                     />
                     {/* DASHBOARD */}
                     <Route
-                        path="/dashboard"
+                        path={ROUTE.DASHBOARD}
                         element={<AuthGuard requireAuth={true}><DashboardPage /></AuthGuard>}
                     />
                     {/* PROJECT */}
                     <Route
-                        path="/project"
+                        path={ROUTE.PROJECTFORM}
                         element={<AuthGuard requireAuth={true}><ProjectFormPage /></AuthGuard>}
                     />
                     {/* TASK */}
                     <Route
-                        path="/task"
+                        path={ROUTE.TASKFORM}
                         element={<AuthGuard requireAuth={true}><TaskFormPage /></AuthGuard>}
                     />
                     {/* NOT FOUND */}
-                    <Route path="*" element={<NotFoundPage />} />
+                    <Route path={ROUTE.NOTFOUND} element={<NotFoundPage />} />
                 </Route>
             </Routes>
         </BrowserRouter>

@@ -1,26 +1,43 @@
-import { FETCH_PROJECTS_SUCCESS, FETCH_PROJECTS_FAIL, ADD_PROJECT_FAIL, ADD_PROJECT_SUCCESS } from "../action/projectActions";
-import { LOGOUT } from "../action/authActions";
-
+import { PROJECT } from "../../util/environment";
 const initialState = {
-  lastCreated: null,
   projects: [],
+  isLoading: false,
   error: null,
 };
 
 const projectReducer = (state = initialState, action) => {
-  console.log(`[REDUCER] - ${action.type}, `, action.payload);
-
   switch (action.type) {
-    case FETCH_PROJECTS_SUCCESS:
-      return { ...state, projects: action.payload, error: null };
-    case FETCH_PROJECTS_FAIL:
-      return { ...state, projects: [], error: action.payload };
-    case ADD_PROJECT_SUCCESS:
-      return { ...state, lastCreated: action.payload, error: null };
-    case ADD_PROJECT_FAIL:
-      return { ...state, lastCreated: null, error: action.payload };
-      case LOGOUT: 
-      return { ...state, lastCreated: null, error: null, projects: [] };
+    case PROJECT.CLEAR:
+      return initialState;
+      
+    case PROJECT.REQUEST:
+      return { ...state, isLoading: true, error: null };
+
+    case PROJECT.GET_SUCCESS:
+      return { ...state, isLoading: false, projects: action.payload };
+
+    case PROJECT.CREATE_SUCCESS:
+      return { ...state, isLoading: false, projects: [...state.projects, action.payload] };
+
+    case PROJECT.UPDATE_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        projects: state.projects.map((project) =>
+          project.id === action.payload.id ? action.payload : project
+        ),
+      };
+
+    case PROJECT.DELETE_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        projects: state.projects.filter((project) => project.id !== action.payload),
+      };
+
+    case PROJECT.FAILURE:
+      return { ...state, isLoading: false, error: action.payload }
+
     default:
       return state;
   }

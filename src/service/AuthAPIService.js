@@ -1,4 +1,4 @@
-import { API_URL } from "../util/environment";
+import { DOMAIN } from "../util/environment";
 
 // Example API response:
 // 1. OK
@@ -22,7 +22,7 @@ import { API_URL } from "../util/environment";
 export const loginApi = async (username, password) => {
   try {
     var body = JSON.stringify({ username, password });
-    var url = `${API_URL}/auth/login`;
+    var url = `${DOMAIN}/auth/login`;
     console.log(`[REQUEST] ${url}, [BODY]: `, body);
 
     const response = await fetch(url, {
@@ -48,7 +48,7 @@ export const loginApi = async (username, password) => {
 export const registerApi = async (fullName, username, password) => {
   try {
     var body = JSON.stringify({ fullName, username, password });
-    var url = `${API_URL}/auth/register`;
+    var url = `${DOMAIN}/auth/register`;
     console.log(`[REQUEST] ${url}, [BODY]: `, body);
 
     const response = await fetch(url, {

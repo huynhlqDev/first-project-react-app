@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Link from '@mui/material/Link';
+import { ROUTE } from '../util/environment'
 
 const LoginPage = () => {
     /// PROPERRTIES
@@ -36,7 +37,7 @@ const LoginPage = () => {
     }, [username, password])
 
     useEffect(() => {
-        if (logged) navigate("/dashboard");
+        if (logged) navigate(ROUTE.DASHBOARD);
     }, [logged])
 
     useEffect(() => {

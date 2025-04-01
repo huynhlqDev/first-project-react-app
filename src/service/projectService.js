@@ -1,8 +1,8 @@
-import { API_URL } from "../util/environment";
+import { DOMAIN } from "../util/environment";
 
-export const fetchProjectsApi = async (username, password) => {
+export const getProjectsApi = async (username, password) => {
     try {
-        const url = `${API_URL}/projects`;
+        const url = `${DOMAIN}/projects`;
         const token = localStorage.getItem("TOKEN");
 
         const request = {
@@ -30,24 +30,18 @@ export const fetchProjectsApi = async (username, password) => {
     }
 };
 
-export const addProjectApi = async (
-    identifier,
-    name,
-    description,
-    startDate,
-    endDate
-) => {
+export const createProjectApi = async (project) => {
     try {
-        const url = `${API_URL}/projects`;
+        const url = `${DOMAIN}/projects`;
         const token = localStorage.getItem("TOKEN");
         const ownerUsername = localStorage.getItem("USERNAME");
         const body = {
-            identifier,
-            name,
-            description,
-            startDate,
-            endDate,
-            ownerUsername
+            identifier: project.identifier,
+            name: project.name,
+            description: project.description,
+            startDate: project.startDate,
+            endDate: project.endDate,
+            ownerUsername: ownerUsername,
         }
 
         const request = {

@@ -1,19 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addProject } from '../redux/action/projectActions';
+import { useNavigate } from 'react-router-dom';
+import { ROUTE } from '../util/environment';
 
 const ProjectFormPage = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const [projectname, setProjectname] = useState('');
-    const [projectId, setProjectId] = useState('');
-    const [projectDescription, setProjectDescription] = useState('');
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
+    const { projects, error } = useSelector(state => state.project);
+    const [formData, setFormData] = useState({
+        identifier: "",
+        name: "",
+        description: "",
+        startDate: "",
+        endDate: "",
+    });
     const [validate, setValidate] = useState({
         fullname: false,
         projectId: false,
@@ -22,30 +28,47 @@ const ProjectFormPage = () => {
         endDate: false
     });
 
+    useEffect(() => {
+        if (projects.some((project) => project.identifier === formData.identifier)) {
+            alert("Create a project success")
+            navigate(ROUTE.DASHBOARD)
+        }
+        if (error) {
+            alert(error)
+        }
+    }, [projects, error])
+
+    useEffect(() => {
+        return () => {
+            // clear page data
+        }
+    }, [])
+
     const handleSubmit = (e) => {
         if (!isValidInput()) {
             e.preventDefault();
-            dispatch(addProject(
-                projectId,
-                projectname,
-                projectDescription,
-                startDate,
-                endDate))
+            dispatch(addProject(formData))
         }
     }
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        console.log(`name: ${name}, value: ${value}`);
+        setFormData((prev) => ({ ...prev, [name]: value }));
+    };
+
     const isValidInput = () => {
         setValidate({
-            fullname: projectname.length === 0,
-            projectId: projectId.length === 0,
-            startDate: startDate.length === 0,
-            endDate: endDate.length === 0
+            fullname: formData.name.length === 0,
+            projectId: formData.identifier.length === 0,
+            startDate: formData.startDate.length === 0,
+            endDate: formData.endDate.length === 0
         })
         return (
-            projectname.length === 0
-            && projectId.length === 0
-            && startDate.length === 0
-            && endDate.length === 0
+            formData.name.length === 0
+            && formData.identifier.length === 0
+            && formData.startDate.length === 0
+            && formData.endDate.length === 0
         );
     }
 
@@ -60,59 +83,63 @@ const ProjectFormPage = () => {
 
                 <TextField
                     id="projectname"
+                    name='name'
                     label="Project Name"
-                    // variant="outlined"
                     required
                     error={(validate.fullname)}
-                    onInput={(e) => setProjectname(e.target.value)}
                     helperText={validate.fullname ? "Incorrect entry." : ""}
+                    onInput={handleChange}
                 />
                 <TextField
                     id="project-id"
+                    name='identifier'
                     label="Unique Project ID"
                     variant="outlined"
                     required
                     error={(validate.projectId)}
-                    onInput={(e) => setProjectId(e.target.value)}
                     helperText={validate.projectId ? "Incorrect entry." : ""}
+                    onInput={handleChange}
                 />
                 <TextField
                     id="project-description"
+                    name='description'
                     label="Project Description"
                     variant="outlined"
                     error={(validate.projectDescription)}
-                    onInput={(e) => setProjectDescription(e.target.value)}
                     helperText={validate.projectDescription ? "Incorrect entry." : ""}
                     rows={2} multiline
+                    onInput={handleChange}
                 />
                 <TextField
                     id="start-date"
+                    name='startDate'
                     label="Start Date"
                     variant="outlined"
                     type='date'
                     required
                     focused
                     error={(validate.startDate)}
-                    onInput={(e) => setStartDate(e.target.value)}
                     helperText={validate.startDate ? "Incorrect entry." : ""}
+                    onInput={handleChange}
                 />
                 <TextField
                     id="end-date"
+                    name='endDate'
                     label="End Date"
                     variant="outlined"
                     type='date'
                     required
                     focused
                     error={(validate.endDate)}
-                    onInput={(e) => setEndDate(e.target.value)}
+                    onInput={handleChange}
                     helperText={validate.endDate ? "Incorrect entry." : ""}
                 />
                 <br></br>
                 <Button
                     type="Submit"
                     id="submit"
-                    onClick={handleSubmit}
                     variant="outlined"
+                    onClick={handleSubmit}
                 >
                     Submit
                 </Button>
